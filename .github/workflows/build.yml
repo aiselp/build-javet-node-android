@@ -29,13 +29,13 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           file: Dockerfile.prod
-          tags: ceclin/builder:latest
+          tags: farendaibiao/builder:latest
 
       - name: Run builder image
         run: |
           mkdir out && docker run --name builder \
             -v ${{ github.workspace }}/out:/abc/out \
-            ceclin/builder:latest ./build.sh ${{ matrix.arch }}
+            farendaibiao/builder:latest ./build.sh ${{ matrix.arch }}
 
       - name: Upload log
         uses: actions/upload-artifact@v3

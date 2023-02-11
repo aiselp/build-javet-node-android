@@ -199,3 +199,15 @@
              'src/unix/linux-core.c',
              'src/unix/linux-inotify.c',
              'src/unix/linux-syscalls.c',
+--- node-ref/deps/zlib/BUILD.gn	2022-12-01 13:20:43.258103267 +0000
++++ node/deps/zlib/BUILD.gn	2022-12-01 19:20:21.813175203 +0000
+@@ -59,8 +59,5 @@
+ use_arm_neon_optimizations = false
+-if ((current_cpu == "arm" || current_cpu == "arm64") &&
+-    !(is_win && !is_clang)) {
+-  # TODO(richard.townsend@arm.com): Optimizations temporarily disabled for
+-  # Windows on Arm MSVC builds, see http://crbug.com/v8/10012.
++if ((current_cpu == "arm" || current_cpu == "arm64") {
+   if (arm_use_neon) {
+     use_arm_neon_optimizations = true
+   }

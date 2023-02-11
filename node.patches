@@ -28,7 +28,7 @@
 +    os.system("./configure --dest-cpu=" + DEST_CPU + " --dest-os=android --openssl-no-asm --cross-compiling" + extra_arguments)
 --- node-ref/common.gypi	2022-12-01 13:20:44.768120497 +0000
 +++ node/common.gypi	2022-12-01 13:21:15.529851498 +0000
-@@ -408,7 +408,7 @@
+@@ -404,7 +404,7 @@
          'ldflags': [ '-rdynamic' ],
          'target_conditions': [
            # The 1990s toolchain on SmartOS can't handle thin archives.
@@ -39,14 +39,16 @@
            ['OS=="openbsd"', {
 --- node-ref/configure.py	2022-12-01 13:20:45.448128256 +0000
 +++ node/configure.py	2022-12-01 13:21:15.529851498 +0000
-@@ -1246,8 +1246,8 @@
+@@ -1289,9 +1289,9 @@
    o['variables']['want_separate_host_toolset'] = int(cross_compiling)
  
    # Enable branch protection for arm64
 -  if target_arch == 'arm64':
 -    o['cflags']+=['-msign-return-address=all']
+-    o['variables']['arm_fpu'] = options.arm_fpu or 'neon'
 +  # if target_arch == 'arm64':
 +  #   o['cflags']+=['-msign-return-address=all']
++  #   o['variables']['arm_fpu'] = options.arm_fpu or 'neon'
  
    if options.node_snapshot_main is not None:
      if options.shared:

@@ -136,7 +136,7 @@
  #if defined(_SC_PAGE_SIZE) && defined(PROT_NONE) && defined(PROT_READ) &&      \
      defined(PROT_WRITE)
  #define USE_MPROTECT
-@@ -54,7 +55,7 @@
+@@ -54,8 +55,8 @@
  #ifdef USE_MPROTECT
      // Place the packet right before a guard page, which, when accessed, causes
      // a segmentation fault.
@@ -147,3 +147,4 @@
      uint8_t* second_page = alloc_base + page;
 -    CHECK_EQ(mprotect(second_page, page, PROT_NONE), 0);
 +    EXPECT_EQ(mprotect(second_page, page, PROT_NONE), 0);
+     data_base = second_page - N;

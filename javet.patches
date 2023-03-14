@@ -18,9 +18,9 @@
 -        v8_base_without_compiler v8_compiler v8_init v8_initializers
 -        v8_libbase v8_libplatform v8_snapshot v8_zlib zlib zlib_adler32_simd zlib_inflate_chunk_simd)
 -    if(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "arm64")
--       list(APPEND importLibraries base64_neon64)
+-        list(APPEND importLibraries base64_neon64)
 +    if(CMAKE_ANDROID_ARCH STREQUAL "arm" OR CMAKE_ANDROID_ARCH STREQUAL "arm64")
-+       list(APPEND importLibraries
++        list(APPEND importLibraries
 +            base64 brotli cares histogram llhttp nghttp2 nghttp3 ngtcp2 openssl simdutf torque_base uvwasi
 +            v8_base_without_compiler v8_compiler v8_init v8_initializers
 +            v8_libbase v8_libplatform v8_snapshot v8_zlib zlib)
@@ -46,7 +46,6 @@
      if(CMAKE_SYSTEM_NAME STREQUAL "Darwin" AND CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "arm64")
          list(APPEND importLibraries zlib_arm_crc32)
 -    else()
-+    elseif(NOT CMAKE_ANDROID_ARCH STREQUAL "arm")
 -        list(APPEND importLibraries zlib_crc32_simd)
 +    elseif(NOT CMAKE_ANDROID_ARCH STREQUAL "arm")
 +        if(NOT CMAKE_ANDROID_ARCH STREQUAL "arm64")
@@ -55,7 +54,7 @@
      endif()
      add_definitions(-DENABLE_NODE)
      set(JAVET_LIB_TYPE "node")
-@@ -228,6 +235,20 @@
+@@ -228,6 +237,20 @@
              target_link_libraries(JavetStatic PUBLIC -Wl,--whole-archive ${importLibraries} -Wl,--no-whole-archive
                  -llog -static-libgcc -static-libstdc++ "${libgcc}")
          endif()

@@ -9,14 +9,14 @@
      set(CMAKE_ANDROID_STL_TYPE c++_static)
      set(JAVA_RESOURCES_DIR ${CMAKE_SOURCE_DIR}/../android/javet-android/src/main/jniLibs/${CMAKE_ANDROID_ARCH_ABI})
  else()
-@@ -113,19 +113,26 @@
+@@ -113,26 +113,35 @@ if(DEFINED NODE_DIR)
          ${NODE_DIR}/deps/v8
          ${NODE_DIR}/deps/v8/include
          ${NODE_DIR}/src)
 -    list(APPEND importLibraries
 -        base64 brotli cares histogram llhttp nghttp2 nghttp3 ngtcp2 openssl simdutf torque_base uvwasi
 -        v8_base_without_compiler v8_compiler v8_init v8_initializers
--        v8_libbase v8_libplatform v8_snapshot v8_zlib zlib zlib_adler32_simd zlib_crc32_simd zlib_inflate_chunk_simd)
+-        v8_libbase v8_libplatform v8_snapshot v8_zlib zlib zlib_adler32_simd zlib_inflate_chunk_simd)
 -    if(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "arm64")
 -        list(APPEND importLibraries base64_neon64)
 +    if(CMAKE_ANDROID_ARCH STREQUAL "arm" OR CMAKE_ANDROID_ARCH STREQUAL "arm64")
@@ -43,7 +43,19 @@
      elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
          list(APPEND importLibraries node uv)
      endif()
-@@ -223,6 +230,20 @@
+     if(CMAKE_SYSTEM_NAME STREQUAL "Darwin" AND CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "arm64")
+         list(APPEND importLibraries zlib_arm_crc32)
+-    else()
++    elseif(NOT CMAKE_ANDROID_ARCH STREQUAL "arm")
+-        list(APPEND importLibraries zlib_crc32_simd)
++    elseif(NOT CMAKE_ANDROID_ARCH STREQUAL "arm")
++        if(NOT CMAKE_ANDROID_ARCH STREQUAL "arm64")
++            list(APPEND importLibraries zlib_crc32_simd)
++        endif()
+     endif()
+     add_definitions(-DENABLE_NODE)
+     set(JAVET_LIB_TYPE "node")
+@@ -228,6 +235,20 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux" OR CMAKE_SYSTEM_NAME STREQUAL "Android
              target_link_libraries(JavetStatic PUBLIC -Wl,--whole-archive ${importLibraries} -Wl,--no-whole-archive
                  -llog -static-libgcc -static-libstdc++ "${libgcc}")
          endif()

@@ -189,13 +189,4 @@
    return (unsigned) rc;
 -#endif  /* __linux__ */
  }
---- node-ref/deps/uv/uv.gyp	2022-12-01 13:20:43.258103267 +0000
-+++ node/deps/uv/uv.gyp	2022-12-01 19:20:21.813175203 +0000
-@@ -256,7 +256,6 @@
-         }],
-         [ 'OS=="android"', {
-           'sources': [
--            'src/unix/android-ifaddrs.c',
-             'src/unix/linux-core.c',
-             'src/unix/linux-inotify.c',
-             'src/unix/linux-syscalls.c',
+

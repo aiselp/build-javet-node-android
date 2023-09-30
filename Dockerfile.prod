@@ -35,5 +35,6 @@ COPY javet.patches node.patches build.sh ./
 
 RUN (cd javet && patch -p1 -f < ../javet.patches) \
     && (cd node && patch -p1 -f < ../node.patches)
-RUN (cd node && patch -p1 -f < ./android-configure patch)
+
+RUN cd node && patch -p1 -f < ./android-configure patch
 

@@ -228,3 +228,4 @@
 - #if defined(BUILDING_V8_SHARED) && defined(V8_OS_WIN)
 + #if V8_OS_ANDROID && V8_TRAP_HANDLER_SUPPORTED
 + // It would require some careful security review before the trap handler
+ 

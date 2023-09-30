@@ -192,14 +192,13 @@
  }
 --- node-ref/android-patches/trap-handler.h.patch	2021-10-08 19:08:46.000000000 +0530
 +++ node/android-patches/trap-handler.h.patch	2021-10-09 19:43:08.715641214 +0530
-@@ -1,6 +1,6 @@
+@@ -1,5 +1,5 @@
  --- trap-handler.h	2022-08-11 09:01:23.384000000 +0800
  +++ fixed-trap-handler.h	2022-08-11 09:09:15.352000000 +0800
 -@@ -17,23 +17,7 @@
 +@@ -17,29 +17,7 @@
   namespace internal {
   namespace trap_handler {
- 
 @@ -13,14 +13,20 @@
  -#elif V8_TARGET_ARCH_ARM64 && V8_HOST_ARCH_ARM64 && V8_OS_DARWIN
  -#define V8_TRAP_HANDLER_SUPPORTED true
@@ -219,7 +218,7 @@
  -#else
   #define V8_TRAP_HANDLER_SUPPORTED false
  -#endif
- 
+  
 - // Setup for shared library export.
 - #if defined(BUILDING_V8_SHARED) && defined(V8_OS_WIN)
 \ No newline at end of file

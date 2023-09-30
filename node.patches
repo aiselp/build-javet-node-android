@@ -196,10 +196,11 @@
  --- trap-handler.h	2022-08-11 09:01:23.384000000 +0800
  +++ fixed-trap-handler.h	2022-08-11 09:09:15.352000000 +0800
 -@@ -17,23 +17,7 @@
-+@@ -17,29 +17,7 @@
++@@ -17,29 +17,7 @@ namespace v8 {
   namespace internal {
   namespace trap_handler {
-@@ -13,14 +13,20 @@
+  
+@@ -13,8 +15,14 @@
  -#elif V8_TARGET_ARCH_ARM64 && V8_HOST_ARCH_ARM64 && V8_OS_DARWIN
  -#define V8_TRAP_HANDLER_SUPPORTED true
  -// Arm64 simulator on x64 on Linux, Mac, or Windows.
@@ -215,7 +216,7 @@
  -#define V8_TRAP_HANDLER_VIA_SIMULATOR
  -#define V8_TRAP_HANDLER_SUPPORTED true
  -// Everything else is unsupported.
- -#else
+@@ -22,5 +30,5 @@
   #define V8_TRAP_HANDLER_SUPPORTED false
  -#endif
   

@@ -199,7 +199,6 @@
 +@@ -17,29 +17,7 @@ namespace v8 {
   namespace internal {
   namespace trap_handler {
-  
 @@ -13,8 +15,14 @@
  -#elif V8_TARGET_ARCH_ARM64 && V8_HOST_ARCH_ARM64 && V8_OS_DARWIN
  -#define V8_TRAP_HANDLER_SUPPORTED true

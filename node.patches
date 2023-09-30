@@ -54,7 +54,7 @@
      if options.shared:
 --- node-ref/deps/v8/src/codegen/arm/constants-arm.h	2022-12-01 13:20:43.258103267 +0000
 +++ node/deps/v8/src/codegen/arm/constants-arm.h	2022-12-01 19:20:21.813175203 +0000
-@@ -160,7 +160,13 @@
+@@ -178,8 +178,14 @@
  constexpr int U = 1 << 23;  // Positive (or negative) offset/index.
  constexpr int P =
      1 << 24;  // Offset/pre-indexed addressing (or post-indexed addressing).

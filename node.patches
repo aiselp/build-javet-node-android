@@ -216,9 +216,9 @@
 --#else
 - #define V8_TRAP_HANDLER_SUPPORTED false
 --#endif
-
- // Setup for shared library export.
- #if defined(BUILDING_V8_SHARED) && defined(V8_OS_WIN)
+-
+- // Setup for shared library export.
+- #if defined(BUILDING_V8_SHARED) && defined(V8_OS_WIN)
 --- node-ref/deps/v8/src/trap-handler/trap-handler.h	2021-10-08 19:08:46.000000000 +0530
 +++ node/deps/v8/src/trap-handler/trap-handler.h	2021-10-09 19:43:08.715641214 +0530
 @@ -17,29 +17,7 @@

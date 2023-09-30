@@ -199,8 +199,6 @@
 +@@ -17,29 +17,7 @@
   namespace internal {
   namespace trap_handler {
-- 
-+
  -// X64 on Linux, Windows, MacOS, FreeBSD.
  -#if V8_HOST_ARCH_X64 && V8_TARGET_ARCH_X64 &&                        \
  -    ((V8_OS_LINUX && !V8_OS_ANDROID) || V8_OS_WIN || V8_OS_DARWIN || \
@@ -227,6 +225,6 @@
 - // Setup for shared library export.
 - #if defined(BUILDING_V8_SHARED) && defined(V8_OS_WIN)
 \ No newline at end of file
-+
++ 
 + #if V8_OS_ANDROID && V8_TRAP_HANDLER_SUPPORTED
 + // It would require some careful security review before the trap handler

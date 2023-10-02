@@ -54,20 +54,21 @@
      if options.shared:
 --- node-ref/deps/v8/src/codegen/arm/constants-arm.h	2022-12-01 13:20:43.258103267 +0000
 +++ node/deps/v8/src/codegen/arm/constants-arm.h	2022-12-01 19:20:21.813175203 +0000
-@@ -160,7 +160,13 @@
-   U = 1 << 23,  // Positive (or negative) offset/index.
-   P = 1 << 24,  // Offset/pre-indexed addressing (or post-indexed addressing).
-   I = 1 << 25,  // Immediate shifter operand (or not).
+@@ -178,8 +178,14 @@
+ constexpr int U = 1 << 23;  // Positive (or negative) offset/index.
+ constexpr int P =
+     1 << 24;  // Offset/pre-indexed addressing (or post-indexed addressing).
+ constexpr int I = 1 << 25;  // Immediate shifter operand (or not).
 +#ifdef B0
 +#undef B0
 +// ensure safe undef
 +#define B0 ~!@#$%^&*()_+{}|:"<>?`-=[]\;',./
 +#else
-   B0 = 1 << 0,
+ constexpr int B0 = 1 << 0;
 +#endif
-   B4 = 1 << 4,
-   B5 = 1 << 5,
-   B6 = 1 << 6,
+ constexpr int B4 = 1 << 4;
+ constexpr int B5 = 1 << 5;
+ constexpr int B6 = 1 << 6;
 --- node-ref/deps/v8/src/heap/base/asm/x64/push_registers_asm.cc	2022-12-01 13:20:43.238103039 +0000
 +++ node/deps/v8/src/heap/base/asm/x64/push_registers_asm.cc	2022-12-01 15:42:14.156089798 +0000
 @@ -16,12 +16,15 @@
@@ -189,4 +190,55 @@
    return (unsigned) rc;
 -#endif  /* __linux__ */
  }
-
+--- node-ref/android-patches/trap-handler.h.patch	2021-10-08 19:08:46.000000000 +0530
++++ node/android-patches/trap-handler.h.patch	2021-10-09 19:43:08.715641214 +0530
+@@ -1,5 +1,5 @@
+ --- trap-handler.h	2022-08-11 09:01:23.384000000 +0800
+ +++ fixed-trap-handler.h	2022-08-11 09:09:15.352000000 +0800
+-@@ -17,23 +17,7 @@
++@@ -17,29 +17,7 @@ namespace v8 {
+  namespace internal {
+  namespace trap_handler {
+@@ -13,8 +15,14 @@
+ -#elif V8_TARGET_ARCH_ARM64 && V8_HOST_ARCH_ARM64 && V8_OS_DARWIN
+ -#define V8_TRAP_HANDLER_SUPPORTED true
+ -// Arm64 simulator on x64 on Linux, Mac, or Windows.
++-//
++-// The simulator case uses some inline assembly code, which cannot be
++-// compiled with MSVC, so don't enable the trap handler in that case.
++-// (MSVC #defines _MSC_VER, but so does Clang when targeting Windows, hence
++-// the check for __clang__.)
+ -#elif V8_TARGET_ARCH_ARM64 && V8_HOST_ARCH_X64 && \
+--    (V8_OS_LINUX || V8_OS_DARWIN)
++-    (V8_OS_LINUX || V8_OS_DARWIN || V8_OS_WIN) && \
++-    (!defined(_MSC_VER) || defined(__clang__))
+ -#define V8_TRAP_HANDLER_VIA_SIMULATOR
+ -#define V8_TRAP_HANDLER_SUPPORTED true
+ -// Everything else is unsupported.
+@@ -22,5 +30,5 @@
+  #define V8_TRAP_HANDLER_SUPPORTED false
+ -#endif
+  
+- // Setup for shared library export.
+- #if defined(BUILDING_V8_SHARED) && defined(V8_OS_WIN)
+\ No newline at end of file
++ #if V8_OS_ANDROID && V8_TRAP_HANDLER_SUPPORTED
++ // It would require some careful security review before the trap handler
+--- node-ref/deps/uv/uv.gyp	2021-10-08 19:08:46.000000000 +0530
++++ node/deps/uv/uv.gyp	2021-10-09 19:43:08.715641214 +0530
+@@ -136,7 +136,6 @@
+     'uv_sources_android': [
+       'src/unix/linux.c',
+       'src/unix/procfs-exepath.c',
+-      'src/unix/pthread-fixes.c',
+       'src/unix/random-getentropy.c',
+       'src/unix/random-getrandom.c',
+       'src/unix/random-sysctl-linux.c',
+@@ -398,7 +397,6 @@
+         }],
+         ['OS=="zos"', {
+           'sources': [
+-            'src/unix/pthread-fixes.c',
+             'src/unix/os390.c',
+             'src/unix/os390-syscalls.c'
+           ]

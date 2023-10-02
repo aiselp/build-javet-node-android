@@ -16,4 +16,5 @@ else
   d deps/v8/src/codegen/arm/constants-arm.h
   d deps/v8/src/heap/base/asm/x64/push_registers_asm.cc
   d test/cctest/test_crypto_clienthello.cc
+  d android-patches/trap-handler.h.patch
 fi

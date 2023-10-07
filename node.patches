@@ -37,6 +37,32 @@
              'standalone_static_library': 1,
            }],
            ['OS=="openbsd"', {
+@@ -511,4 +511,24 @@
+             'defines': [ '_GLIBCXX_USE_C99_MATH' ],
+             'libraries': [ '-llog' ],
+           }],
++          ['_type=="loadable_module"', {
++            'conditions': [
++              # While loading a native node module, Android needs to have a
++              # (NEEDED) entry for libnode.so, or it won't be able to locate
++              # referenced symbols.
++              # We link to the binary libraries that are distributed with the
++              # nodejs-mobile headers so the (NEEDED) entry is created
++              [ 'target_arch=="arm"', {
++                'libraries': ['>(node_root_dir)/bin/armeabi-v7a/libnode.so'],
++              }],
++              [ 'target_arch=="arm64"', {
++                'libraries': ['>(node_root_dir)/bin/arm64-v8a/libnode.so'],
++              }],
++              [ 'target_arch=="x86"', {
++                'libraries': ['>(node_root_dir)/bin/x86/libnode.so'],
++              }],
++              [ 'target_arch=="x86_64"', {
++                'libraries': ['>(node_root_dir)/bin/x86_64/libnode.so'],
++              }],
++            ],
++          }],
+           ['_toolset=="host"', {
 --- node-ref/configure.py	2022-12-01 13:20:45.448128256 +0000
 +++ node/configure.py	2022-12-01 13:21:15.529851498 +0000
 @@ -1289,9 +1289,9 @@

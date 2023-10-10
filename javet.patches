@@ -1,6 +1,6 @@
 --- javet-ref/cpp/CMakeLists.txt	2022-12-01 13:20:54.888196745 +0000
 +++ javet/cpp/CMakeLists.txt	2022-12-01 21:19:11.754556739 +0000
-@@ -113,13 +113,20 @@
+@@ -113,13 +113,20 @@ if(DEFINED NODE_DIR)
          ${NODE_DIR}/deps/v8
          ${NODE_DIR}/deps/v8/include
          ${NODE_DIR}/src)
@@ -27,7 +27,7 @@
          list(APPEND importLibraries base64_avx base64_avx2 base64_sse41 base64_sse42 base64_ssse3)
      endif()
      if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-@@ -127,7 +134,7 @@
+@@ -127,7 +134,7 @@ if(DEFINED NODE_DIR)
      elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "(arm64|aarch64)")
          list(APPEND importLibraries node uv)
      elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux" OR CMAKE_SYSTEM_NAME STREQUAL "Android")
@@ -36,11 +36,12 @@
      elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
          list(APPEND importLibraries node uv)
      endif()
-@@ -135,8 +142,10 @@
+@@ -135,8 +142,10 @@ if(DEFINED NODE_DIR)
          list(APPEND importLibraries zlib_arm_crc32)
      elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "(arm64|aarch64)")
          list(APPEND importLibraries zlib_arm_crc32)
 -    # else()
+-    #     list(APPEND importLibraries zlib_crc32_simd)
 +    # elseif(NOT CMAKE_ANDROID_ARCH STREQUAL "arm")
 +    #     if(NOT CMAKE_ANDROID_ARCH STREQUAL "arm64")
 +    #         list(APPEND importLibraries zlib_crc32_simd)
@@ -48,7 +49,7 @@
      endif()
      add_definitions(-DENABLE_NODE)
      set(JAVET_LIB_TYPE "node")
-@@ -231,8 +240,13 @@
+@@ -231,8 +240,13 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux" OR CMAKE_SYSTEM_NAME STREQUAL "Android
          set(JAVET_LIB_SYSTEM "android")
          add_definitions(-D__ANDROID__)
          list(APPEND includeDirs $ENV{JAVA_HOME}/include/linux)
@@ -64,7 +65,7 @@
          if(DEFINED V8_DIR)
              foreach(importLibrary ${importLibraries})
                  set_target_properties(${importLibrary} PROPERTIES IMPORTED_LOCATION ${V8_RELEASE_DIR}/obj/lib${importLibrary}.a)
-@@ -242,6 +256,20 @@
+@@ -242,6 +256,20 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux" OR CMAKE_SYSTEM_NAME STREQUAL "Android
              target_link_libraries(JavetStatic PUBLIC -Wl,--whole-archive ${importLibraries} -Wl,--no-whole-archive
                  -llog -static-libgcc -static-libstdc++ "${libgcc}")
          endif()

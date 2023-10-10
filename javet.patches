@@ -86,6 +86,13 @@
      elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin" AND CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "(arm64|x86_64)")
          set(JAVET_LIB_SYSTEM "macos")
          set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-ambiguous-reversed-operator ")
+@@ -303,4 +331,4 @@ else()
+     set_target_properties(Javet PROPERTIES OUTPUT_NAME "${JAVET_LIB_PREFIX}-${JAVET_LIB_TYPE}-${JAVET_LIB_SYSTEM}.v.${JAVET_VERSION}")
+ endif()
+ include_directories(${includeDirs})
+-add_custom_command(TARGET Javet POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Javet> "${JAVA_RESOURCES_DIR}/$<TARGET_FILE_NAME:Javet>")
++add_custom_command(TARGET Javet POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Javet> "${JAVA_RESOURCES_DIR}/$<TARGET_FILE_NAME:Javet>")
+\ No newline at end of file
 --- javet-ref/cpp/jni/javet_native.h	2022-12-01 13:20:54.888196745 +0000
 +++ javet/cpp/jni/javet_native.h	2022-12-01 18:46:45.951502958 +0000
 @@ -21,6 +21,7 @@

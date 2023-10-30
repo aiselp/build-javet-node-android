@@ -29,13 +29,13 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           file: Dockerfile.prod
-          tags: farendaibiao/builder:latest
+          tags: anonyein/builder:latest
 
       - name: Run builder image
         run: |
           mkdir out && docker run --name builder \
             -v ${{ github.workspace }}/out:/abc/out \
-            farendaibiao/builder:latest ./build.sh ${{ matrix.arch }}
+            anonyein/builder:latest ./build.sh ${{ matrix.arch }}
 
       - name: Upload log
         uses: actions/upload-artifact@v3

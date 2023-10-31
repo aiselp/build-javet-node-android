@@ -6,7 +6,7 @@ build_node() {
 }
 
 build_javet() {
-    rm -rf build/lib*.so
+    rm -rf build_android/lib*.so
     ./build-android.sh \
         -DNODE_DIR=/abc/node \
         -DCMAKE_ANDROID_NDK=$NDK_HOME \
@@ -38,6 +38,6 @@ for arch in ${@:-arm64 x86_64 arm x86}; do
     [ $? -ne 0 ] && continue
     (cd javet/cpp && build_javet $arch) 2>&1 | tee "out/log/javet_$arch.log"
     [ $? -ne 0 ] && continue
-    cp javet/cpp/build/lib*.so $prefix
+    cp javet/cpp/build_android/lib*.so $prefix
     echo "arch $arch ended at $(date)" >>out/log/time.log
 done

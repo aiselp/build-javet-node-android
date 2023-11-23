@@ -8,7 +8,7 @@
  
  # TODO: In next version, it will be a JSON file listing all the patches, and then it will iterate through to apply them.
  def patch_android():
-@@ -66,11 +67,15 @@
+@@ -66,12 +67,16 @@
  os.environ['CC'] = toolchain_path + "/bin/" + TOOLCHAIN_PREFIX + android_sdk_version + "-" +  "clang"
  os.environ['CXX'] = toolchain_path + "/bin/" + TOOLCHAIN_PREFIX + android_sdk_version + "-" + "clang++"
  

@@ -150,47 +150,6 @@
 -    CHECK_EQ(mprotect(second_page, page, PROT_NONE), 0);
 +    EXPECT_EQ(mprotect(second_page, page, PROT_NONE), 0);
      data_base = second_page - N;
---- node-ref/deps/uv/src/unix/core.c	2022-12-01 13:20:43.258103267 +0000
-+++ node/deps/uv/src/unix/core.c	2022-12-01 19:20:21.813175203 +0000
-@@ -1630,38 +1630,9 @@
- unsigned int uv_available_parallelism(void) {
--#ifdef __linux__
--  cpu_set_t set;
--  long rc;
--
--  memset(&set, 0, sizeof(set));
--
--  /* sysconf(_SC_NPROCESSORS_ONLN) in musl calls sched_getaffinity() but in
--   * glibc it's... complicated... so for consistency try sched_getaffinity()
--   * before falling back to sysconf(_SC_NPROCESSORS_ONLN).
--   */
--  if (0 == sched_getaffinity(0, sizeof(set), &set))
--    rc = CPU_COUNT(&set);
--  else
--    rc = sysconf(_SC_NPROCESSORS_ONLN);
--
--  if (rc < 1)
--    rc = 1;
--
--  return (unsigned) rc;
--#elif defined(__MVS__)
--  int rc;
--
--  rc = __get_num_online_cpus();
--  if (rc < 1)
--    rc = 1;
--
--  return (unsigned) rc;
--#else  /* __linux__ */
-   long rc;
- 
-   rc = sysconf(_SC_NPROCESSORS_ONLN);
-   if (rc < 1)
-     rc = 1;
- 
-   return (unsigned) rc;
--#endif  /* __linux__ */
- }
 --- node-ref/android-patches/trap-handler.h.patch	2021-10-08 19:08:46.000000000 +0530
 +++ node/android-patches/trap-handler.h.patch	2021-10-09 19:43:08.715641214 +0530
 @@ -1,5 +1,5 @@

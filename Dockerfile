@@ -28,9 +28,9 @@ RUN wget -O node.tar.gz https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION
     && cp -r node node-ref \
     && rm node.tar.gz
 
-ARG JAVET_POINT=dev/3.0.2
+ARG JAVET_POINT=dev/3.0.3
 
-RUN git clone -b dev/3.0.2 --single-branch https://github.com/anonyein/Javet.git javet && cd javet && git switch -c abc $JAVET_POINT \
+RUN git clone -b dev/3.0.3 --single-branch https://github.com/anonyein/Javet.git javet && cd javet && git switch -c abc $JAVET_POINT \
     && cp -r . ../javet-ref
 
 RUN apt-get update && apt-get install -y \

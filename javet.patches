@@ -24,7 +24,7 @@
 +    if(CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "(arm64|aarch64)" OR CMAKE_ANDROID_ARCH MATCHES "(arm64|aarch64)")
 +        list(APPEND importLibraries base64_neon64)
 +    elseif(NOT CMAKE_ANDROID_ARCH MATCHES "(arm|arm64)")
-         list(APPEND importLibraries base64_avx base64_avx2 base64_sse41 base64_sse42 base64_ssse3)
+         list(APPEND importLibraries base64_avx base64_avx2 base64_avx512 base64_sse41 base64_sse42 base64_ssse3)
      endif()
      if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
 @@ -127,7 +134,7 @@ if(DEFINED NODE_DIR)

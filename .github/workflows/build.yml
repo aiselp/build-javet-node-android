@@ -38,13 +38,13 @@ jobs:
             anonyein/builder:latest ./build.sh ${{ matrix.arch }}
 
       - name: Upload log
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: build-log
           path: out/log
 
       - name: Upload lib
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: native-lib
           path: out/lib

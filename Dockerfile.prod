@@ -29,7 +29,8 @@ RUN wget -O node.tar.gz https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION
 
 ARG JAVET_POINT=dev/3.0.4
  
-RUN git clone -b dev/3.0.4 --single-branch https://github.com/anonyein/Javet.git javet && cd javet && git switch -c abc $JAVET_POINT
+RUN RUN git rm -r --cached javet \
+    && git clone -b dev/3.0.4 --single-branch https://github.com/anonyein/Javet.git javet && cd javet && git switch -c abc $JAVET_POINT
 
 COPY javet.patches node.patches build.sh ./
 

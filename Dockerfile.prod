@@ -1,9 +1,5 @@
 FROM ubuntu:latest
 
-RUN git rm -r --cached . \
-    git add . \
-    git commit -m 'update cached'
-
 RUN apt-get update && apt-get install -y \
     gcc g++ make gcc-multilib g++-multilib \
     openjdk-17-jre python3.10 \

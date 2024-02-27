@@ -1,6 +1,17 @@
 --- javet-ref/cpp/CMakeLists.txt	2022-12-01 13:20:54.888196745 +0000
 +++ javet/cpp/CMakeLists.txt	2022-12-01 18:46:45.951502958 +0000
-@@ -258,9 +258,9 @@
+ @@ -136,9 +136,7 @@ if(DEFINED NODE_DIR)
+     endif()
+     # zlib
+     if(CMAKE_SYSTEM_NAME STREQUAL "Android")
+-        if(CMAKE_ANDROID_ARCH STREQUAL "arm64")
++        if(CMAKE_ANDROID_ARCH MATCHES "(x86|x86_64)")
+-            list(APPEND importLibraries zlib_adler32_simd zlib_arm_crc32)
+-        elseif(CMAKE_ANDROID_ARCH MATCHES "(x86|x86_64)")
+             list(APPEND importLibraries zlib_adler32_simd zlib_inflate_chunk_simd)
+         endif()
+     else()
+@@ -258,9 +256,9 @@
          if(DEFINED NODE_DIR)
              list(APPEND includeDirs
 -                ${NODE_DIR}/out.${CMAKE_ANDROID_ARCH}/Release/obj/gen/generate-bytecode-output-root

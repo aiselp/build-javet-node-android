@@ -1,3 +1,19 @@
+--- javet-ref/cpp/CMakeLists.txt	2022-12-01 13:20:54.888196745 +0000
++++ javet/cpp/CMakeLists.txt	2022-12-01 18:46:45.951502958 +0000
+@@ -258,9 +258,9 @@
+         if(DEFINED NODE_DIR)
+             list(APPEND includeDirs
+-                ${NODE_DIR}/out.${CMAKE_ANDROID_ARCH}/Release/obj/gen/generate-bytecode-output-root
+-                ${NODE_DIR}/out.${CMAKE_ANDROID_ARCH}/Release/obj/gen/inspector-generated-output-root
+-                ${NODE_DIR}/out.${CMAKE_ANDROID_ARCH}/Release/obj/gen)
++                ${NODE_DIR}/out/Release/obj/gen/generate-bytecode-output-root
++                ${NODE_DIR}/out/Release/obj/gen/inspector-generated-output-root
++                ${NODE_DIR}/out/Release/obj/gen)
+             foreach(importLibrary ${importLibraries})
+-                set_target_properties(${importLibrary} PROPERTIES IMPORTED_LOCATION ${NODE_DIR}/out.${CMAKE_ANDROID_ARCH}/Release/lib${importLibrary}.a)
++                set_target_properties(${importLibrary} PROPERTIES IMPORTED_LOCATION ${NODE_DIR}/out/Release/lib${importLibrary}.a)
+             endforeach(importLibrary)
+             list(REMOVE_ITEM importLibraries v8_init)
 --- javet-ref/cpp/jni/javet_native.h	2022-12-01 13:20:54.888196745 +0000
 +++ javet/cpp/jni/javet_native.h	2022-12-01 18:46:45.951502958 +0000
 @@ -21,6 +21,7 @@

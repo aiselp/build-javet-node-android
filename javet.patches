@@ -1,15 +1,22 @@
 --- javet-ref/cpp/CMakeLists.txt	2022-12-01 13:20:54.888196745 +0000
 +++ javet/cpp/CMakeLists.txt	2022-12-01 18:46:45.951502958 +0000
 @@ -137,8 +137,6 @@
+@@ -136,9 +136,10 @@
+     endif()
      # zlib
      if(CMAKE_SYSTEM_NAME STREQUAL "Android")
 -        if(CMAKE_ANDROID_ARCH STREQUAL "arm64")
 -            list(APPEND importLibraries zlib_adler32_simd zlib_arm_crc32)
 -        elseif(CMAKE_ANDROID_ARCH MATCHES "(x86|x86_64)")
++        # if(CMAKE_ANDROID_ARCH STREQUAL "arm64")
++        #     list(APPEND importLibraries zlib_adler32_simd zlib_arm_crc32)
++        # elseif(CMAKE_ANDROID_ARCH MATCHES "(x86|x86_64)")
 +        if(CMAKE_ANDROID_ARCH MATCHES "(x86|x86_64)")
              list(APPEND importLibraries zlib_adler32_simd zlib_inflate_chunk_simd)
          endif()
-@@ -258,9 +256,9 @@
+     else()
+@@ -257,11 +258,11 @@
+         endif()
          if(DEFINED NODE_DIR)
              list(APPEND includeDirs
 -                ${NODE_DIR}/out.${CMAKE_ANDROID_ARCH}/Release/obj/gen/generate-bytecode-output-root
@@ -23,6 +30,7 @@
 +                set_target_properties(${importLibrary} PROPERTIES IMPORTED_LOCATION ${NODE_DIR}/out/Release/lib${importLibrary}.a)
              endforeach(importLibrary)
              list(REMOVE_ITEM importLibraries v8_init)
+             target_link_libraries(Javet PUBLIC -Wl,--whole-archive ${importLibraries} -Wl,--no-whole-archive
 --- javet-ref/cpp/jni/javet_native.h	2022-12-01 13:20:54.888196745 +0000
 +++ javet/cpp/jni/javet_native.h	2022-12-01 18:46:45.951502958 +0000
 @@ -21,6 +21,7 @@
